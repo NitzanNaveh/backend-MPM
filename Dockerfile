@@ -3,12 +3,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy and restore dependencies
-COPY ProjectManager.Api/ProjectManager.Api.csproj ./ProjectManager.Api/
-RUN dotnet restore ProjectManager.Api/ProjectManager.Api.csproj
+COPY ProjectManager.Api.csproj ./
+RUN dotnet restore ProjectManager.Api.csproj
 
 # Copy the rest of the source code and publish
-COPY ProjectManager.Api/. ./ProjectManager.Api/
-WORKDIR /src/ProjectManager.Api
+COPY . .
 RUN dotnet publish -c Release -o /app/publish
 
 # Final runtime image
